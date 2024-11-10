@@ -69,6 +69,6 @@ helm install my-release my-chart --dry-run --debug
 ```
 This command will:
 
-    Render templates as usual.
-    Display debug output, including variable values and rendered templates.
-    Highlight any potential issues or syntax errors in the chart.
+- Render templates as usual.
+- Display debug output, including variable values and rendered templates.
+- Highlight any potential issues or syntax errors in the chart.
