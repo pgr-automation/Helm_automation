@@ -22,5 +22,10 @@ Helm charts often define their own default namespaces, but you can override thes
 Use the `--namespace` flag to specify a namespace when installing a Helm release:
 
 ```bash
+helm install my-release my-chart --namespace my-namespace --create-namespace
+```
+or
+```bash
+kubectl create ns my-namespace
 helm install my-release my-chart --namespace my-namespace
 ```
