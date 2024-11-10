@@ -76,6 +76,16 @@ Then upgrade the release using this new configuration:
 ```bash
 helm upgrade my-nginx stable/nginx -f custom-values.yaml
 ```
+
+### Check Release Versions
+- for latest release
+```bash
+helm list --deployed
+```
+- for previous release
+```bash
+helm list --superseded
+```
 ### Step 5: Rollback if Necessary
 
 If you need to rollback to a previous release version, you can do so using the following command:
@@ -83,3 +93,4 @@ If you need to rollback to a previous release version, you can do so using the f
 helm rollback my-nginx 1
 ```
 The 1 represents the revision number.
+
