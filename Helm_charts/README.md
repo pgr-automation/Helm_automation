@@ -31,4 +31,6 @@ The .helmignore file in a Helm chart works similarly to a .gitignore file in Git
 - **Chart.yaml**:
  is a critical file in a Helm chart that contains metadata about the chart itself. It provides details like the chart’s name, version, and description, and it also defines dependencies if the chart relies on other charts. Helm reads Chart.yaml to understand the chart's structure and to manage deployments, upgrades, and rollbacks.
     - in chart.yml 
-        appversion is nothing but docker image version
+        appversion is nothing but docker image version/tag  
+    - Can impletemt dependency charts
+    - maintainers
