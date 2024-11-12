@@ -117,3 +117,38 @@ In a Helm chart, the charts folder is a directory where Helm stores chart depend
 - Purpose of the charts Folder
 
 The charts folder allows for modular and composable chart development. Instead of defining all resources in a single chart, you can reference and include other charts as dependencies. This approach promotes reusability and simplifies the management of complex applications that rely on multiple components.
+#### How Dependencies Work
+```bash
+# Chart.yaml
+apiVersion: v2
+name: my-app
+version: 1.0.0
+
+dependencies:
+  - name: redis
+    version: ">=5.0.0"
+    repository: "https://charts.bitnami.com/bitnami"
+  - name: mysql
+    version: ">=8.0.0"
+    repository: "https://charts.bitnami.com/bitnami"
+```
+
+This example specifies that my-app depends on the Redis and MySQL charts from Bitnami.
+Managing Dependencies with helm dependency
+
+Helm uses the helm dependency command to manage dependencies:
+
+    - helm dependency update: This command downloads the dependencies specified in Chart.yaml and stores them in the charts folder. This process fetches .tgz packages (Helm chart archives) of the dependencies.
+
+    - helm dependency build: This command also downloads dependencies, building them according to the Chart.yaml.
+#### Structure of the charts Folder
+```bash
+my-app/
+├── Chart.yaml
+├── values.yaml
+├── charts/
+│   ├── redis-5.0.0.tgz
+│   └── mysql-8.0.0.tgz
+├── templates/
+│   └── deployment.yaml
+```
