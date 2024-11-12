@@ -91,4 +91,24 @@ env:
   - name: DEBUG
     value: "false"
 ```
+#### How values.yaml Works with Templates
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    spec:
+      containers:
+        - name: app
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.env.NODE_ENV }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+```
 
+- **charts folder**
