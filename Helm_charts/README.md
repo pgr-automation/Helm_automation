@@ -138,9 +138,9 @@ Managing Dependencies with helm dependency
 
 Helm uses the helm dependency command to manage dependencies:
 
-    - helm dependency update: This command downloads the dependencies specified in Chart.yaml and stores them in the charts folder. This process fetches .tgz packages (Helm chart archives) of the dependencies.
+    - ```helm dependency update```: This command downloads the dependencies specified in Chart.yaml and stores them in the charts folder. This process fetches .tgz packages (Helm chart archives) of the dependencies.
 
-    - helm dependency build: This command also downloads dependencies, building them according to the Chart.yaml.
+    - ```helm dependency build```: This command also downloads dependencies, building them according to the Chart.yaml.
 #### Structure of the charts Folder
 ```bash
 my-app/
