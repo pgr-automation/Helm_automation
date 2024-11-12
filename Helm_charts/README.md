@@ -112,3 +112,8 @@ spec:
 ```
 
 - **charts folder**
+In a Helm chart, the charts folder is a directory where Helm stores chart dependencies. Dependencies are other Helm charts that this chart relies on, often reusable components like databases, message queues, or other microservices. By including dependencies in the charts folder, Helm makes it easier to deploy complex applications with multiple components.
+
+- Purpose of the charts Folder
+
+The charts folder allows for modular and composable chart development. Instead of defining all resources in a single chart, you can reference and include other charts as dependencies. This approach promotes reusability and simplifies the management of complex applications that rely on multiple components.
