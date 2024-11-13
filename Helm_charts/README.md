@@ -164,20 +164,20 @@ The templates folder allows you to define Kubernetes resources (like Deployments
 
 
 
-- **templetes/_helpers.tpl**: 
+ **templetes/_helpers.tpl**: 
 The `_helpers.tpl` file in a Helm chart is a special template file within the `templates` directory used to define reusable template functions. These helper functions make it easy to standardize and reuse values across multiple templates, making the chart modular, consistent, and maintainable.
 
-## Purpose of `_helpers.tpl`
+#### Purpose of `_helpers.tpl`
 
 The main purpose of `_helpers.tpl` is to provide reusable template logic, helping maintain consistent values across resources in a Helm chart. You can define functions here to avoid redundancy and ensure uniform naming conventions, labels, and annotations in the chart.
 
-## Common Uses of `_helpers.tpl`
+#### Common Uses of `_helpers.tpl`
 
 1. **Naming Conventions**: Create standardized naming patterns for resources to ensure consistency across all resources.
 2. **Labels and Annotations**: Define common labels or annotations that can be reused in multiple resources.
 3. **Custom Formatting Functions**: Create custom functions to format or define default values for use across templates.
 
-## Example Structure of `_helpers.tpl`
+#### Example Structure of `_helpers.tpl`
 
 Here’s an example of a `_helpers.tpl` file that defines a naming helper and a labels helper function.
 
