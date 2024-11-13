@@ -152,3 +152,100 @@ my-app/
 ├── templates/
 │   └── deployment.yaml
 ```
+
+- **Templates folder**:
+In a Helm chart, the templates folder contains the Kubernetes resource templates that Helm uses to deploy and configure the application. These templates are written in YAML and can include placeholders that are populated with values from the chart's values.yaml file, as well as from other sources like Chart.yaml. The templates folder is crucial because it enables Helm to generate customized Kubernetes manifests for deployment.
+
+- In a Helm chart, the templates folder contains the Kubernetes resource templates that Helm uses to deploy and configure the application. These templates are written in YAML and can include placeholders that are populated with values from the chart's values.yaml file, as well as from other sources like Chart.yaml. The templates folder is crucial because it enables Helm to generate customized Kubernetes manifests for deployment.
+Purpose of the templates Folder
+
+The templates folder allows you to define Kubernetes resources (like Deployments, Services, ConfigMaps, etc.) in a flexible and dynamic way. Instead of hardcoding values, you use template syntax to reference values, which makes the chart reusable and configurable across different environments.
+
+
+
+
+- **templetes/_helpers.tpl**: 
+The `_helpers.tpl` file in a Helm chart is a special template file within the `templates` directory used to define reusable template functions. These helper functions make it easy to standardize and reuse values across multiple templates, making the chart modular, consistent, and maintainable.
+
+## Purpose of `_helpers.tpl`
+
+The main purpose of `_helpers.tpl` is to provide reusable template logic, helping maintain consistent values across resources in a Helm chart. You can define functions here to avoid redundancy and ensure uniform naming conventions, labels, and annotations in the chart.
+
+## Common Uses of `_helpers.tpl`
+
+1. **Naming Conventions**: Create standardized naming patterns for resources to ensure consistency across all resources.
+2. **Labels and Annotations**: Define common labels or annotations that can be reused in multiple resources.
+3. **Custom Formatting Functions**: Create custom functions to format or define default values for use across templates.
+
+## Example Structure of `_helpers.tpl`
+
+Here’s an example of a `_helpers.tpl` file that defines a naming helper and a labels helper function.
+
+```yaml
+{{- define "my-chart.fullname" -}}
+{{ .Release.Name }}-{{ .Chart.Name }}
+{{- end -}}
+
+{{- define "my-chart.labels" -}}
+app.kubernetes.io/name: {{ .Chart.Name | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+{{- end -}}
+```
+***Explanation of Example Helpers***
+
+  1. Resource Naming Helper:
+```yaml
+  {{- define "my-chart.fullname" -}}
+{{ .Release.Name }}-{{ .Chart.Name }}
+{{- end -}}
+```
+  - This helper function, my-chart.fullname, creates a standardized name by combining the Helm release name and chart name. This approach ensures consistent resource naming.
+
+  2. Labels Helper:
+```yaml
+{{- define "my-chart.labels" -}}
+app.kubernetes.io/name: {{ .Chart.Name | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+{{- end -}}
+```
+  - The my-chart.labels helper function defines common labels that follow Kubernetes recommended conventions. You can use this set of labels in any Kubernetes resource that needs them.
+
+**Using Helpers in Templates**:
+
+To use helpers defined in _helpers.tpl, you reference them in other templates (such as deployment.yaml or service.yaml) using the {{ include }} function.
+
+Here’s an example deployment.yaml that uses the helpers from _helpers.tpl:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-chart.fullname" . }}
+  labels:
+    {{ include "my-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        {{ include "my-chart.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: my-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 80
+```
+In this example:
+
+    - The fullname helper is used to set a consistent name for the Deployment.
+    - The labels helper is used to apply consistent labeling to the Deployment and Pod templates.
+
+**Benefits of Using _helpers.tpl**
+
+   -  Consistency: Define naming conventions, labels, and annotations in one place and reuse them across multiple resources.
+   -  Modularity: Make Helm charts easier to read and maintain by avoiding repetitive code.
+   -  Ease of Maintenance: Changes to names, labels, or other standard configurations can be updated in a single location.
